@@ -1,0 +1,29 @@
+From 542e9df4ab554e662cfb46ff66521dbad1d1c8ed Mon Sep 17 00:00:00 2001
+From: Anya Lin <hukk1996@gmail.com>
+Date: Sun, 24 Nov 2024 10:17:54 +0000
+Subject: [PATCH] debug: echo $PATH
+
+---
+ build.rs | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/build.rs b/build.rs
+index 27ebeb0..fdb54f8 100644
+--- a/build.rs
++++ b/build.rs
+@@ -67,6 +67,14 @@ fn einat_obj_build() {
+     } else {
+         "bpfeb"
+     };
++ 
++    let debug_cmd = "echo PATH: $PATH";
++    let res = Command::new("bash")
++        .arg("-c")
++        .arg(debug_cmd)
++        .status()
++        .unwrap();
++    panic!("{}", res);
+ 
+     cmd.arg("-target")
+         .arg(target)
+-- 
